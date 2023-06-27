@@ -171,7 +171,7 @@ class DataTable
 
         return $response->setJSON([
             'draw'              => Request::get('draw'),
-            'recordsTotal'      => $this->query->countAll(),
+            'recordsTotal'      => $this->query->countFiltered(),
             'recordsFiltered'   => $this->query->countFiltered(),
             'data'              => $this->query->getDataResult(),
 
