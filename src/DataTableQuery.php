@@ -152,17 +152,10 @@ class DataTableQuery
         $columnRequests = Request::get('columns');
         foreach ($columnRequests as $index => $request) 
         {
-            
-           if ($request['search']['regex'] != "false") {
-                $search = explode(',', $request['search']['value']);
-                $values = ['>=', '<=', '>', '<', '=', '!=', '<>'];
-                if (isset($search[1]) && in_array($search[0], $values)) {
-                    $builder->where($column . $search[0], $search[1]);
-                } else {
-                    $builder->where($column, $request['search']['value']);
-                }
-
-            } else {
+            if($request['search']['value'] != '')
+            {
+                $column              = $this->columnDefs->getSearchRequest($index, $request);
+                $this->doQueryFilter = TRUE;
                 $builder->like($column, $request['search']['value']);
             }
         }
