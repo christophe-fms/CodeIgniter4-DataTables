@@ -150,8 +150,11 @@ class DataTableQuery
 
         //individual column search (multi column search)
         $columnRequests = Request::get('columns');
+
         foreach ($columnRequests as $index => $request) 
         {
+            $column              = $this->columnDefs->getSearchRequest($index, $request);
+            $this->doQueryFilter = TRUE;
             
             if ($request['search']['regex'] != "false") {
                 $search = explode(',', $request['search']['value']);
